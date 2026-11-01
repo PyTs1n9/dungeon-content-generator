@@ -46,22 +46,44 @@ BOSS 层 → 武器/装备    三条路径任选
 
 长度一律 4-6 字。材料名、中间物名、召唤物名不受此限。
 
-## 三、指令写法
+## 三、格式骨架
+
+**材料 / 中间物 / 召唤物**
 
 ```text
-[钻石剑] 黯淡流星 ｜ 配方:裂隙余光×2+空壳残响×2
-/lore name &6&l黯淡流星
-/lore add &6攻击:+28000-32000
-/lore add &4暴击率:+40%
-/lore add &7划破镜面的那一瞬，没人看清它的形状
-/lore add &f等级:28000级
+[材质] 名称 ｜ 掉落:N个
+/lore name &b名称 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a第一句描述
+/lore add &9第二句描述
+```
+
+**武器 / 装备**
+
+```text
+[材质] 名称 ｜ 配方:...
+/lore name &4&l名称 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6攻击： &f+最小值-最大值
+/lore add &颜色属性名：&f+数值%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a第一句描述
+/lore add &9第二句描述
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &fNNNNN
 ```
 
 三条不许破的次序：
 
-1. 首行是 `[材质] 名称 ｜ 掉落/配方`，不带颜色码
-2. `/lore name` 在该块最前
-3. 武器第一条 `/lore add` 必须是 `&6攻击`，防具必须是 `&6生命`
+1. `/lore name` 在块内最前
+2. 武器第一条属性是 `&6攻击：`，防具是 `&6生命：`
+3. 五个空行 `&加a` 缺一个都会让版面塌掉
 
 ## 四、属性颜色速查
 
@@ -81,17 +103,15 @@ BOSS 层 → 武器/装备    三条路径任选
 
 ### 同色只能出现一次
 
-按颜色归组，一件物品每一组只能取一个：
-
 | 颜色 | 同色候选 | 每件可选 |
 |---|---|---|
 | `&6` | 攻击、生命、速度、斩杀 | 1 |
 | `&c` | 狂暴、生命提升、烧伤 | 1 |
 | `&e` | 闪避、反弹伤害 | 1 |
-| `&1` | 暴击伤害 | 1 |
-| `&3` | 格挡 | 1 |
 | `&4` | 暴击率、首领伤害 | 1 |
 | `&9` | 防御、减速 | 1 |
+| `&1` | 暴击伤害 | 1 |
+| `&3` | 格挡 | 1 |
 | `&a` | 吸血 | 1 |
 | `&b` | 幸运 | 1 |
 | `&2` | 中毒 | 1 |
@@ -100,7 +120,9 @@ BOSS 层 → 武器/装备    三条路径任选
 | `&7` | 失明 | 1 |
 | `&d` | 经验加成 | 1 |
 
-武器必带攻击、防具必带生命，两者都是 `&6`，所以 **`&6` 那一格永远被占满，速度与斩杀在武器/防具上不会出现**。这是规则的必然结果。
+武器必带攻击、防具必带生命，两者都是 `&6`，所以 **`&6` 那一格永远被占满，速度与斩杀在武器/防具上不会出现**。
+
+描述第二行默认用 `&9`，若该件属性已占用 `&9`（防御或减速），改用 `&d`。
 
 ### 防御换算
 
@@ -141,91 +163,157 @@ BOSS召唤物数量：1
 ```text
 【小怪材料】
 [玻璃] 镜面族纹 ｜ 掉落:1-2个
-/lore name &b镜面族纹
-/lore add &7镜中贵族碎裂时掉落的镜片，边缘刻着别人的脸
+/lore name &b镜面族纹 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a镜中贵族碎裂时掉落的镜片
+/lore add &9边缘刻着别人的脸
 
 [皮革] 完美仿皮 ｜ 掉落:1-3个
-/lore name &b完美仿皮
-/lore add &7它们复制的完美外表，摸上去却像一层不属于自己的皮
+/lore name &b完美仿皮 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a它们复制的完美外表
+/lore add &9摸上去却像一层不属于自己的皮
 
 【小怪中间物】
 [皮革] 拟态之皮 ｜ 配方:镜面族纹×32+完美仿皮×32
-/lore name &e拟态之皮
-/lore add &7用镜片和仿皮压出的第二层皮，穿上就能骗过同类
+/lore name &e拟态之皮 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a用镜片和仿皮压出的第二层皮
+/lore add &9穿上就能骗过同类
 
 【BOSS召唤物】
 [唱片(wait)] 伪镜之心 ｜ 配方:拟态之皮×1+货币×50
-/lore name &d伪镜之心
-/lore add &7镜中之主听见了你的呼唤，它准备用你的脸站起来
+/lore name &d伪镜之心 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a镜中之主听见了你的呼唤
+/lore add &9它准备用你的脸站起来
 
 【BOSS材料】
 [萤石粉] 裂隙余光 ｜ 掉落:1个
-/lore name &b裂隙余光
-/lore add &7伪镜碎裂时漏出的最后一点真实
+/lore name &b裂隙余光 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a伪镜碎裂时漏出的最后一点真实
+/lore add &9亮得刺眼
 
 [末影之眼] 空壳残响 ｜ 掉落:1个
-/lore name &b空壳残响
-/lore add &7被撕开的伪装留下的回声，仍在模仿你的呼吸
+/lore name &b空壳残响 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a被撕开的伪装留下的回声
+/lore add &9仍在模仿你的呼吸
 
 【BOSS中间物】
 [末影珍珠] 镜骸 ｜ 配方:裂隙余光×2+空壳残响×2
-/lore name &e镜骸
-/lore add &7把两种残响压进一颗珠子里，那张脸在里面慢慢浮起来
+/lore name &e镜骸 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a把两种残响压进一颗珠子里
+/lore add &9那张脸在里面慢慢浮起来
 
 【武器】
 [钻石剑] 黯淡流星 ｜ 配方:裂隙余光×2+空壳残响×2
-/lore name &6&l黯淡流星
-/lore add &6攻击:+28000-32000
-/lore add &4暴击率:+40%
-/lore add &c烧伤:+40%
-/lore add &e闪避:+25%
-/lore add &9防御:+6
-/lore add &a吸血:+25%
-/lore add &7划破镜面的那一瞬，没人看清它的形状
-/lore add &f等级:28000级
+/lore name &4&l黯淡流星 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6攻击： &f+28000-32000
+/lore add &4暴击率：&f+40%
+/lore add &c烧伤：&f+40%
+/lore add &e闪避：&f+25%
+/lore add &9防御：&f+6
+/lore add &a吸血：&f+25%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a划破镜面的那一瞬
+/lore add &9没人看清它的形状
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f28000
 
 [钻石剑] 千面归虚 ｜ 配方:裂隙余光×3+货币×60
-/lore name &6&l千面归虚
-/lore add &6攻击:+26000-30000
-/lore add &4首领伤害:+20%
-/lore add &1暴击伤害:+35%
-/lore add &3格挡:+15%
-/lore add &9减速:+25%
-/lore add &b幸运:+12%
-/lore add &7所有伪装塌陷之后，只剩这一道
-/lore add &f等级:24000级
+/lore name &4&l千面归虚 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6攻击： &f+26000-30000
+/lore add &4首领伤害：&f+20%
+/lore add &1暴击伤害：&f+35%
+/lore add &3格挡：&f+15%
+/lore add &9减速：&f+25%
+/lore add &b幸运：&f+12%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a所有伪装塌陷之后
+/lore add &9只剩这一道
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f24000
 
 【装备】
 [金头盔] 千面归一 ｜ 配方:镜骸×1+货币×55
-/lore name &6&l千面归一
-/lore add &6生命:+12000
-/lore add &c生命提升:+25%
-/lore add &3格挡:+15%
-/lore add &a吸血:+12%
-/lore add &9防御:+30
-/lore add &b幸运:-10%
-/lore add &7戴上它，镜中再无一物能映出你的脸
-/lore add &f等级:22000级
+/lore name &4&l千面归一 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+12000
+/lore add &c生命提升：&f+25%
+/lore add &3格挡：&f+15%
+/lore add &a吸血：&f+12%
+/lore add &9防御：&f+30
+/lore add &b幸运：&f-10%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a戴上它
+/lore add &d镜中再无一物能映出你的脸
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f22000
 
 [金胸甲] 无人识我 ｜ 配方:裂隙余光×2+空壳残响×2
-/lore name &6&l无人识我
-/lore add &6生命:+11800
-/lore add &c狂暴:+20%
-/lore add &e反弹伤害:+8%
-/lore add &a吸血:+15%
-/lore add &5体力流失:+18%
-/lore add &7这层壳由无数张脸压成
-/lore add &f等级:20000级
+/lore name &4&l无人识我 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+11800
+/lore add &c狂暴：&f+20%
+/lore add &e反弹伤害：&f+8%
+/lore add &a吸血：&f+15%
+/lore add &5体力流失：&f+18%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a这层壳由无数张脸压成
+/lore add &9没有一张是你
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f20000
 
 [金靴子] 踏碎虚影 ｜ 配方:空壳残响×2+货币×50
-/lore name &6&l踏碎虚影
-/lore add &6生命:+10500
-/lore add &e闪避:+22%
-/lore add &9防御:+22
-/lore add &2中毒:+12%
-/lore add &7失明:+15%
-/lore add &8踩碎一地镜片，不发出一点声音
-/lore add &f等级:17000级
+/lore name &4&l踏碎虚影 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+10500
+/lore add &e闪避：&f+22%
+/lore add &9防御：&f+22
+/lore add &2中毒：&f+12%
+/lore add &7失明：&f+15%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a踩碎一地镜片
+/lore add &d不发出一点声音
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f17000
 ```
 
 **要点拆解**
@@ -233,8 +321,8 @@ BOSS召唤物数量：1
 - 召唤物走两步链：`镜面族纹+完美仿皮 → 拟态之皮`，再 `拟态之皮+货币 → 伪镜之心`
 - 最高档装备「千面归一」走 BOSS 层两步链，累计成本最高，等级也最高（22000）
 - 「黯淡流星」颜色序列 `&6/&4/&c/&e/&9/&a`，六条属性六种颜色，零重复
-- 「千面归一」生命打满 12000，配 `幸运:-10%` 作代价；最强正属性 25%，10% 未超 60% 上限
-- 「踏碎虚影」属性占用了 `&7`（失明），因此描述行改用 `&8`，避免同色冲突
+- 「千面归一」占用了 `&9`（防御），因此描述第二行改用 `&d`
+- 「踏碎虚影」占用了 `&9` 与 `&7`，描述第二行同样用 `&d`
 - 防御按部位分配：胸甲 45 > 头盔 30 > 靴子 22，合计 97 → 减伤 `97/197 ≈ 49%`
 - 名称全部 4 字纯意象，类型完全由材质表达
 
@@ -264,100 +352,159 @@ BOSS召唤物数量：1
 ```text
 【小怪材料】
 [红石粉] 赤焰水晶 ｜ 掉落:1-2个
-/lore name &b赤焰水晶
-/lore add &7凝聚了魔火元素的水晶，浑身通红，能量骇人
+/lore name &b赤焰水晶 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a凝聚了魔火元素的水晶
+/lore add &9浑身通红，能量骇人
 
 [烈焰粉] 炽热灰烬 ｜ 掉落:1-3个
-/lore name &b炽热灰烬
-/lore add &7从火焰之身身上飘落的灰烬，仍带着灼热的温度
+/lore name &b炽热灰烬 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a从火焰之身身上飘落的灰烬
+/lore add &9仍带着灼热的温度
 
 【BOSS召唤物】
 [岩浆膏] 焚心之种 ｜ 配方:赤焰水晶×64+货币×50
-/lore name &d焚心之种
-/lore add &7把火种吞进胸腔，坠炎精灵就会循着热度找来
+/lore name &d焚心之种 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a把火种吞进胸腔
+/lore add &9坠炎精灵就会循着热度找来
 
 【BOSS材料】
 [钻石] 炎魔之核 ｜ 掉落:1个
-/lore name &b炎魔之核
-/lore add &7炎魔力量的核心，握着它会听见火焰在指缝里咆哮
+/lore name &b炎魔之核 &7[&a>>T<<&7]
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a炎魔力量的核心
+/lore add &9握着它会听见火焰在指缝里咆哮
 
 【武器】
 [金剑] 焚天烬灭 ｜ 配方:炎魔之核×6+货币×100
-/lore name &6&l焚天烬灭
-/lore add &6攻击:+28000-32000
-/lore add &4暴击率:+38%
-/lore add &c烧伤:+40%
-/lore add &e闪避:+20%
-/lore add &9防御:+6
-/lore add &a吸血:+25%
-/lore add &7万物焚尽，唯余灰烬
-/lore add &f等级:28000级
+/lore name &4&l焚天烬灭 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6攻击： &f+28000-32000
+/lore add &4暴击率：&f+38%
+/lore add &c烧伤：&f+40%
+/lore add &e闪避：&f+20%
+/lore add &9防御：&f+6
+/lore add &a吸血：&f+25%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a万物焚尽
+/lore add &9唯余灰烬
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f28000
 
 [金镐] 炎魂掘墓 ｜ 配方:炎魔之核×5+货币×85
-/lore name &6&l炎魂掘墓
-/lore add &6攻击:+26000-30000
-/lore add &4首领伤害:+18%
-/lore add &c狂暴:+20%
-/lore add &3格挡:+12%
-/lore add &9减速:+20%
-/lore add &b幸运:+10%
-/lore add &7这把镐子能挖穿大地，直抵炎魔的心脏
-/lore add &f等级:24000级
+/lore name &4&l炎魂掘墓 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6攻击： &f+26000-30000
+/lore add &4首领伤害：&f+18%
+/lore add &c狂暴：&f+20%
+/lore add &3格挡：&f+12%
+/lore add &9减速：&f+20%
+/lore add &b幸运：&f+10%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a这把镐子能挖穿大地
+/lore add &9直抵炎魔的心脏
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f24000
 
 【装备】
 [金头盔] 焚天临世 ｜ 配方:炎魔之核×5+货币×80
-/lore name &6&l焚天临世
-/lore add &6生命:+12000
-/lore add &c生命提升:+22%
-/lore add &3格挡:+14%
-/lore add &a吸血:+12%
-/lore add &9防御:+30
-/lore add &b幸运:-10%
-/lore add &7戴上它，你就是火焰本身
-/lore add &f等级:22000级
+/lore name &4&l焚天临世 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+12000
+/lore add &c生命提升：&f+22%
+/lore add &3格挡：&f+14%
+/lore add &a吸血：&f+12%
+/lore add &9防御：&f+30
+/lore add &b幸运：&f-10%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a戴上它
+/lore add &d你就是火焰本身
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f22000
 
 [金胸甲] 烬灭余温 ｜ 配方:炎魔之核×4+货币×70
-/lore name &6&l烬灭余温
-/lore add &6生命:+11800
-/lore add &c烧伤:+10%
-/lore add &e反弹伤害:+9%
-/lore add &a吸血:+15%
-/lore add &5体力流失:+16%
-/lore add &7这件战甲由炎魔的愤怒锻造而成
-/lore add &f等级:20000级
+/lore name &4&l烬灭余温 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+11800
+/lore add &c烧伤：&f+10%
+/lore add &e反弹伤害：&f+9%
+/lore add &a吸血：&f+15%
+/lore add &5体力流失：&f+16%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a这件战甲
+/lore add &9由炎魔的愤怒锻造而成
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f20000
 
 [金靴子] 踏碎虚影 ｜ 配方:炎魔之核×2+货币×50
-/lore name &6&l踏碎虚影
-/lore add &6生命:+10500
-/lore add &e闪避:+15%
-/lore add &9防御:+22%
-/lore add &2中毒:+10%
-/lore add &8凋零:+8%
-/lore add &7穿上它，你可以在火海中自由穿行
-/lore add &f等级:17000级
+/lore name &4&l踏碎虚影 &7[&a>>T<<&7]
+/lore add &a属性 &e---&6>>
+/lore add &a
+/lore add &6生命： &f+10500
+/lore add &e闪避：&f+15%
+/lore add &9防御：&f+22
+/lore add &2中毒：&f+10%
+/lore add &8凋零：&f+8%
+/lore add &a
+/lore add &a介绍 &e---&6>>
+/lore add &a
+/lore add &a穿上它
+/lore add &d你可以在火海中自由穿行
+/lore add &a
+/lore add &a使用条件 &e---&6>>
+/lore add &a
+/lore add &c等级： &f17000
 ```
 
 **要点拆解**
 
 - BOSS 只掉 **1 种**材料，双材料与两步链均不可用，全部走「直兑 + 加量」
 - 加量即梯级：×6 → ×5 → ×5 → ×4 → ×2，数量本身是稀有度刻度
-- 「烬灭余温」用 `&c 烧伤` 而非 `&c 生命提升`，因为火系主题优先
-- 「踏碎虚影」占用 `&8 凋零`，描述行改用 `&7`，未与属性撞色
+- 「烬灭余温」用 `&c 烧伤` 而非 `&c 生命提升`，火系主题优先
+- 「踏碎虚影」占用 `&9`，描述第二行改 `&d`
 - 货币统一写「货币」，未出现具体货币名
 
 ## 七、常见错误清单
 
 | 错误输出 | 问题 | 修正 |
 |---|---|---|
-| `/lore add &6攻击:+28000-32000` 不在第一行 | 攻击/生命必须置顶 | 移到该块第一条 add |
-| `&6速度:+50%` 与 `&6攻击` 同件 | 同色互斥 | 去掉速度，改 `&b幸运` 或 `&a吸血` |
-| `&c烧伤` 与 `&c狂暴` 同件 | 同色互斥 | 只留一个 |
-| `钻币×50` / `金币×50` | 货币名不统一 | 一律写 `货币×50` |
-| `焚天烬灭剑；金剑；攻击:+28000` | 未使用 lore 指令 | 改为 `[金剑] 焚天烬灭` + 指令行 |
-| `防御:+20%` | 防御是数值属性 | `防御:+20` |
-| 头盔 防御:+300 | 单件超 60 | 按部位分配，超额改堆生命 |
+| `/lore add &6攻击： &f+28000-32000` 不在首位 | 攻击/生命必须置顶 | 移到属性区第一行 |
+| `&6速度：&f+50%` 与 `&6攻击` 同件 | 同色互斥 | 换 `&b幸运` 或 `&a吸血` |
+| 属性区少了 `/lore add &a` 空行 | 版面塌陷 | 五个空行缺一不可 |
+| `&c攻击:` 用半角冒号 | 格式错误 | 全角 `：` |
+| `&e反弹伤害： &f+6%` 多了空格 | 只有攻击、等级留空格 | 去掉空格 |
+| `&b镜面族纹` 缺 ` &7[&a>>T<<&7]` | 名称标记缺失 | 补全 |
+| `钻币×50` / `金币×50` | 货币名不统一 | 一律 `货币×50` |
+| `/give @p minecraft:diamond_sword` | 禁止输出 give | 只保留 `/lore` |
+| `防御：&f+20%` | 防御是数值 | `防御：&f+20` |
+| 头盔 防御：&f+300 | 单件超 60 | 按部位分配，超额改堆生命 |
 | 冰冻 / 挖掘速度 | 属性不存在 | 用 22 项白名单内的 |
-| `生命:-5000` 无最强正属性支撑 | 负属性无代价依据 | 只给打满区间的那件配负属性 |
 | 炎魔之核×2+叛逆之心×2+货币×30 | 单步三格 | 拆两步，或去掉货币 |
 | 望远镜；粉末雪桶 | 非 1.8.8 物品 | 改用玻璃、雪球 |
-| 等级:45000级（区间 17000-34000） | 超出等级范围 | 收进区间内 |
+| 等级： &f45000（区间 17000-34000） | 超出等级范围 | 收进区间内 |
