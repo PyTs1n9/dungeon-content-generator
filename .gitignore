@@ -1,0 +1,14 @@
+# 工作区 AI 记录，不随仓库发布
+.workbuddy/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+*.log
+*.zip

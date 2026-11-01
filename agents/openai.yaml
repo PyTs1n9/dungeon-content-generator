@@ -1,0 +1,5 @@
+interface:
+  display_name: "副本内容生成器"
+  short_description: "为Minecraft RPG服务器生成副本内容"
+  icon_small: null
+  icon_large: null
